@@ -1,0 +1,81 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://data/player/bullet.gd" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="bullet" type="Node2D"]
+
+script/script = ExtResource( 1 )
+direction = Vector2( 0, 0 )
+speed = 1200
+
+[node name="p2d_trail" type="Particles2D" parent="."]
+
+config/amount = 50
+config/lifetime = 3.0
+config/time_scale = 2.0
+config/process_mode = 1
+params/direction = 270.0
+params/spread = 10.0
+params/linear_velocity = 20.0
+params/spin_velocity = 0.0
+params/orbit_velocity = 0.0
+params/gravity_direction = 270.0
+params/gravity_strength = 9.8
+params/radial_accel = 0.0
+params/tangential_accel = 0.0
+params/damping = 0.0
+params/initial_angle = 0.0
+params/initial_size = 1.0
+params/final_size = 1.0
+params/hue_variation = 0.0
+params/anim_speed_scale = 1.0
+params/anim_initial_pos = 0.0
+
+[node name="a2d_hitbox" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 0.241195, 0, 0, 0.235798, -0.354559, 0.0893278 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="c2d_hitbox" type="CollisionShape2D" parent="a2d_hitbox"]
+
+transform/pos = Vector2( -0.354559, 0.0893278 )
+transform/scale = Vector2( 0.241195, 0.235798 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="a2d_teleport" type="Area2D" parent="."]
+
+input/pickable = true
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 0.241195, 0, 0, 0.235798, -0.354559, 0.0893278 )
+shapes/0/trigger = false
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="c2d_teleport" type="CollisionShape2D" parent="a2d_teleport"]
+
+transform/pos = Vector2( -0.354559, 0.0893278 )
+transform/scale = Vector2( 0.241195, 0.235798 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[connection signal="body_enter" from="a2d_teleport" to="." method="_on_a2d_teleport_body_enter"]
+
+[connection signal="body_exit" from="a2d_teleport" to="." method="_on_a2d_teleport_body_exit"]
+
+

@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=1]
+
+[ext_resource path="res://data/player/player.gd" type="Script" id=1]
+[ext_resource path="res://data/player/era1.png" type="Texture" id=2]
+[ext_resource path="res://data/player/era4.png" type="Texture" id=3]
+[ext_resource path="res://data/player/era2.png" type="Texture" id=4]
+[ext_resource path="res://data/player/era3.png" type="Texture" id=5]
+[ext_resource path="res://data/overlays/shadow_overlay.tscn" type="PackedScene" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "jumping",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 2 ) ],
+"loop": true,
+"name": "moving",
+"speed": 7.0
+} ]
+
+[node name="player" type="KinematicBody2D"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 0.662688, 0, 0, 1.0634, 15.2428, 21.1736 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = ExtResource( 1 )
+grav = 1000
+JUMP_FORCE = 350
+SPEED = 100
+ACCELERATION = 500
+DECCELERATION = 900
+MAX_SPEED = 250
+
+[node name="anim_player" type="AnimatedSprite" parent="."]
+
+frames = SubResource( 2 )
+animation = "default"
+playing = true
+centered = false
+
+[node name="shadow_overlay" parent="." instance=ExtResource( 6 )]
+
+transform/pos = Vector2( 1.32037, 0.880249 )
+
+[node name="col_player" type="CollisionShape2D" parent="."]
+
+transform/pos = Vector2( 15.2428, 21.1736 )
+transform/scale = Vector2( 0.662688, 1.0634 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+
